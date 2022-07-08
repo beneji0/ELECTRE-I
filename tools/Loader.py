@@ -2,6 +2,8 @@ import csv
 
 class Loader:
 
+    # Loads the data from an csv file
+
     def __init__(self, path:str) -> None:
         self.path = path
         self.load()
@@ -24,6 +26,8 @@ class Loader:
         
 
 class Formatter:
+
+    # Formats the data in the correct format
 
     def __init__(self, data:dict) -> None:
         self.data = data
@@ -58,6 +62,8 @@ class Formatter:
 
 class PoidsFormatter:
 
+    # Formats the poids parm correctly
+
     def __init__(self, data) -> None:
         self.data = data
         self.handle_empty_poids()
@@ -76,6 +82,8 @@ class PoidsFormatter:
 
 
 class CriteriaTypeFormatter:
+
+    # Normalizes the criteria to minimise values for the electre algorithm
 
     def __init__(self, data) -> None:
         self.data = data

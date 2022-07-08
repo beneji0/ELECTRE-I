@@ -18,5 +18,7 @@ class ElectreSolver(Solver):
 
 
     def get_result_matrix(self):
+        # Returns a domination list with every item being an item dominating another
+
         return list(x for x in self.concordance_matrix.result_matrix if x in self.concordance_matrix.result_matrix)
 

@@ -4,6 +4,8 @@ from .Matrix import ElectreMatrix
 
 class DiscordanceMatrix(ElectreMatrix):
 
+    # Creates the discordance matrix used in the Electre algorithm
+
     def __init__(self, data, poids, coeff=0.3) -> None:
         super().__init__(data, poids, coeff)
 
@@ -13,6 +15,8 @@ class DiscordanceMatrix(ElectreMatrix):
 
 
     def init_delta(self):
+        # Calculates the delta factor of the discordance matrix
+
         maximum = max(max(x.values()) for x in self.data.values())
         minimum = min(min(x.values()) for x in self.data.values())
         self.delta = maximum - minimum
