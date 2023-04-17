@@ -1,17 +1,17 @@
 # Documentation
-Une mini bibiliothèque python qui résout des problèmes Multi critères (supporte actuellement la méthode Electre uniquement).
-Pour plus de solvers, réferrez vous à [Développement](#developpement).
+Mini bibiliothèque python qui résout des problèmes Multi critères (supporte actuellement la méthode Electre uniquement, plus de méthodes à venir).
+Pour des solvers personnalisés, réferrez vous à [Développement](#developpement).
 ## Comment utiliser
-L'app a comme fichier d'entrée /app.py, ce dernier contient le code final à réaliser, toutes les opérations se font dans le fichier config.py et les fichiers des solvers.
-Le fichier config.py contient le paramétrage nécessaire pour faire fonctionner l'app
+L'app a comme fichier d'entrée /app.py, où vous devez mettre le code affichant le résultat final, toute la configuration et les opérations se font dans le fichier config.py et les fichiers des solvers.
+Le fichier config.py contient les paramètres nécessaires pour faire fonctionner l'app, pour changer l'algorithme de résolution ou ses parmètres, veuillez le faire dans ce fichier (config.py).
 
 # Solvers
-Un solver est une classe qui doit impérativement contenir une méthode solve(), cette dernière prend les données d'une analyse et (sous format csv) et génére une solution en se basant sur un algorithme de résolution.
+Un solver est une classe abstraite qui doit impérativement contenir une méthode solve(), cette dernière prend des données d'une analyse (sous format csv, ou dans un dict) et génére une solution en se basant sur un algorithme de résolution choisi.
 ## Configuration
-La première étape à réaliser est de configurer l'app, cette étape ne se fait pas directement depuis le fichier d'entré.
-La première étape est d'aller dans le fichier /config.py dont le paramètre le plus important est le dictionnaire settings:
+Attention: La configuration de l'app ne se fait pas directement depuis le fichier d'entrée (app.py).
+Cette dernière se fait dans le fichier /config.py qui contient un dictionnaire settings (la majeure partie de votre configuration doit se faire au niveau de ce ficher):
 
-Le dictionnaire settings doit contenir (obligatoirement):
+Les attributs obligatoire du dictionnaire settings sont:
 - **algorithm**: La classe du solver à utiliser 
 
 ```python
@@ -21,7 +21,7 @@ from algorithms.Electre.Electre import ElectreSolver
 algorithm = ElectreSolver # Ou votre Solver
 ```
 
-- **data**: Un dictionnaire sous ce format ou si vous utilisez un fichier csv (méthode recommandé):
+- **data**: Un dictionnaire sous ce format contenant les données à traiter ou si vous utilisez un fichier csv (méthode recommandé):
 
 ```python
 # In the config.py file
@@ -49,7 +49,7 @@ poids = {
 poids = Loader("path to csv").get_poids()
 ```
 
-Puis, il faut tout sauvegarder dans le dictionnaire settings:
+Le résultat final doit être sauvegardé dans le dictionnaire settings:
 
 ```python
 # In the config.py file
@@ -63,10 +63,10 @@ settings = {
 ```
 
 ## Fichier CSV
-L'app a été conçue pour fonctionner avec des fichiers csv, donc, c'est la méthode recommandée pour utiliser l'app.
+L'app a été conçue pour fonctionner avec des fichiers csv (méthode recommandée pour utiliser l'app).
 Les attributs clé sont: 
-- **\_\_algorithm_criteria_name\_\_**: (obligatoire) Les noms des critères, pour une bonne lisibilité, il est recommandé de le mettre en première ligne.
-- **\_\_algorithm_poids\_\_**: (optionelle) Les poids des critères, si omise, les critère auront tous un poids identique.
+- **\_\_algorithm_criteria_name\_\_**: (obligatoire) Les noms des critères, pour une bonne lisibilité, mettez-les en première ligne.
+- **\_\_algorithm_poids\_\_**: (optionelle) Les poids des critères, si omise, les critère auront tous un poids identique de 1.
 - **\_\_algorithm_criteria_type\_\_**: (optionelle) Le type du critère (maximisation ou minimisation), prend en charge deux valeurs: "max" ou "min", si omise la valeur par défaut est "max"
 
 ```csv
@@ -92,7 +92,8 @@ Solution().get() # Pour obtenir la solution.
 
 ## DominationGraph
 La classe DominationGraph (chemin depuis la racine: "/tools/Graph.py").
-Dans le cas où la classe fait une comparaison deux à deux, qui donne la liste des élément et les élélments qu'ils surclassent. c'est à dire tout solveur qui donne un résultat final du type:
+La méthode ELECTRE I par exemple fournit une liste des éléments qui domminent chacun un autre, La liste résultant peut être affichée dans un graphe.
+Veuillez utiliser la classe DominationGraph en lui fournissant la liste résultante, le résultat sera affiché dans un graphe.
 
 ```python
 
@@ -119,7 +120,7 @@ DominationGraph(
 Multi criteria problem resolution using the ELECTRE I Method.
 La classe du solver est "ElectreSolver" (chemin depuis la racine: "/algorithms/Electre/Electre.py")
 ### Graph
-La méthode ELECTRE I est compatible avec la méthode DominationGraph.
+La méthode ELECTRE I est compatible avec la méthode [DominationGraph](#DominationGraph).
 ```python
 
 
@@ -133,7 +134,7 @@ DominationGraph(
 # Developpement
 L'application est extensible et vous permet de rajouter vos propres solvers.
 La création d'un Solver se fait en héritant de la classe Solver (chemin depuis la racine: "/algorithms/prototypes.py").
-Il est préférable de créer un dossier (que l'on appellera pour la suite "custom").
+Il est préférable de créer un dossier ("custom" par exemple).
 On y mettrera nos solvers. 
 
 
